@@ -13,15 +13,15 @@ knitr::opts_chunk$set(echo = TRUE)
 The initial porosity profile is usually modelled based on an exponential decrease based on the equation
 ```{=latex}
 \begin{equation}
-\Phi(d) = a \exp(- b d) + c
+\Phi(d) = a_{por} \exp(- b_{por} d) + c_{por}
 \end{equation}
 
 ```
-Where $d$ is depth, $\Phi(d)$ is porosity at dpeth $d$, and $a$,$b$, and $c$ are empirical parameters with the following interpretations:
+Where $d$ is depth, $\Phi(d)$ is porosity at depth $d$, and $a_{por}$,$b_{por}$, and $c_{por}$ are empirical parameters with the following interpretations:
 
-* $c$ is the limit porosity
-* $b$ is a "Compressibility constant"that determines how fast porosity approaches $c$ with depth
-* $a + c$ is the porosity at the sediment surface
+* $c_{por}$ is the limit porosity
+* $b_{por}$ is a "Compressibility constant"that determines how fast porosity approaches $c_{por}$ with depth
+* $a_{por} + c_{por}$ is the porosity at the sediment surface
 
 This is an empirical equation. Parametrizations might deviate, compilations of parameters are available in the Literature
 
