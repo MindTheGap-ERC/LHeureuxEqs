@@ -361,21 +361,22 @@ porosity profile</h1>
 <p>The initial porosity profile is usually modelled based on an
 exponential decrease based on the equation</p>
 <span class="math display">\[\begin{equation}
-\Phi(d) = a \exp(- b d) + c
+\Phi(d) = a_{por} \exp(- b_{por} d) + c_{por}
 \end{equation}
 \]</span>
-<p>Where <span class="math inline">\(d\)</span> is depth, <span class="math inline">\(\Phi(d)\)</span> is porosity at dpeth <span class="math inline">\(d\)</span>, and <span class="math inline">\(a\)</span>,<span class="math inline">\(b\)</span>,
-and <span class="math inline">\(c\)</span> are empirical parameters with
-the following interpretations:</p>
+<p>Where <span class="math inline">\(d\)</span> is depth, <span class="math inline">\(\Phi(d)\)</span> is porosity at depth <span class="math inline">\(d\)</span>, and <span class="math inline">\(a_{por}\)</span>,<span class="math inline">\(b_{por}\)</span>, and <span class="math inline">\(c_{por}\)</span> are empirical parameters with the
+following interpretations:</p>
 <ul>
-<li><span class="math inline">\(c\)</span> is the limit porosity</li>
-<li><span class="math inline">\(b\)</span> is a “Compressibility
-constant”that determines how fast porosity approaches <span class="math inline">\(c\)</span> with depth</li>
-<li><span class="math inline">\(a + c\)</span> is the porosity at the
-sediment surface</li>
+<li><span class="math inline">\(c_{por}\)</span> is the limit
+porosity</li>
+<li><span class="math inline">\(b_{por}\)</span> is a “Compressibility
+constant”that determines how fast porosity approaches <span class="math inline">\(c_{por}\)</span> with depth</li>
+<li><span class="math inline">\(a_{por} + c_{por}\)</span> is the
+porosity at the sediment surface</li>
 </ul>
+<p>The old parametrization can be obtained by setting <span class="math inline">\(a_{por}=b_{por}=0\)</span> and <span class="math inline">\(c_{por}=\Phi_{ini}\)</span></p>
 <p>This is an empirical equation. Parametrizations might deviate,
-compilations of parameters are available in the Literature</p>
+compilations of parameters are available in the Literature.</p>
 </div>
 <div id="continuous-adz" class="section level2">
 <h2>Continuous ADZ</h2>

@@ -23,7 +23,9 @@ Where $d$ is depth, $\Phi(d)$ is porosity at depth $d$, and $a_{por}$,$b_{por}$,
 * $b_{por}$ is a "Compressibility constant"that determines how fast porosity approaches $c_{por}$ with depth
 * $a_{por} + c_{por}$ is the porosity at the sediment surface
 
-This is an empirical equation. Parametrizations might deviate, compilations of parameters are available in the Literature
+The old parametrization can be obtained by setting $a_{por}=b_{por}=0$ and $c_{por}=\Phi_{ini}$
+
+This is an empirical equation. Parametrizations might deviate, compilations of parameters are available in the Literature.
 
 ## Continuous ADZ
 A smooth ADZ can be constructed the following way:
