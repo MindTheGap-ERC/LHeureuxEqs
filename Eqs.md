@@ -2,22 +2,20 @@
 
 The initial porosity profile is usually modelled based on an exponential
 decrease based on the equation
-*Φ*(*d*) = *a*<sub>*p**o**r*</sub>exp (−*b*<sub>*p**o**r*</sub>*d*) + *c*<sub>*p**o**r*</sub>
-Where *d* is depth, *Φ*(*d*) is porosity at depth *d*, and
-*a*<sub>*p**o**r*</sub>,*b*<sub>*p**o**r*</sub>, and
-*c*<sub>*p**o**r*</sub> are empirical parameters with the following
-interpretations:
 
--   *c*<sub>*p**o**r*</sub> is the limit porosity
--   *b*<sub>*p**o**r*</sub> is a “Compressibility constant”that
-    determines how fast porosity approaches *c*<sub>*p**o**r*</sub> with
-    depth
--   *a*<sub>*p**o**r*</sub> + *c*<sub>*p**o**r*</sub> is the porosity at
-    the sediment surface
+$$ \Phi(d) = a_{por} \exp(- b_{por} d) + c_{por}
+$$\
+Where $d$ is depth, $\Phi(d)$ is porosity at depth $d$, and
+$a_{por}$,$b_{por}$, and $c_{por}$ are empirical parameters with the
+following interpretations:
 
-The old parametrization can be obtained by setting
-*a*<sub>*p**o**r*</sub> = *b*<sub>*p**o**r*</sub> = 0 and
-*c*<sub>*p**o**r*</sub> = *Φ*<sub>*i**n**i*</sub>
+-   $c_{por}$ is the limit porosity
+-   $b_{por}$ is a "Compressibility constant"that determines how fast
+    porosity approaches $c_{por}$ with depth
+-   $a_{por} + c_{por}$ is the porosity at the sediment surface
+
+The old parametrization can be obtained by setting $a_{por}=b_{por}=0$
+and $c_{por}=\Phi_{ini}$
 
 This is an empirical equation. Parametrizations might deviate,
 compilations of parameters are available in the Literature.
@@ -27,9 +25,9 @@ Open Questions:
 1.  Which parameter values do we use as benchmarks for comparisons
     between implementations?
 2.  Should they be empirically realistic?
-3.  *b*<sub>*p**o**r*</sub> needs to be adjusted when resaling the
-    system to make it dimensionless. This needs to be specified (see GH
-    issue [here](https://github.com/MindTheGap-ERC/LMA-Matlab/issues/4))
+3.  $b_{por}$ needs to be adjusted when resaling the system to make it
+    dimensionless. This needs to be specified (see GH issue
+    [here](https://github.com/MindTheGap-ERC/LMA-Matlab/issues/4))
 
 ## Continuous ADZ
 
@@ -39,52 +37,75 @@ We are currently working with a step function that turns on the
 aragonite dissolution. In the parametrization og LHeureux (2018), it is
 given by
 
-Where *d* ≥ 0 is depth below sediment surface. For simplicity, I use the
-modified parameters
-*x*<sub>*s**h**a**l**l**o**w*</sub> = *x*<sub>*d*</sub> and
-*x*<sub>*d**e**e**p*</sub> = *x*<sub>*d*</sub> + *h*<sub>*d*</sub>.
+```{=Latex}
+\begin{equation}
+f_0(d) = 
+\begin{cases}
+0  & \text{ for } d < x_d\\
+1 & \text{ for } d \in [x_d, x_d + h_d]\\
+0 & \text{ for } d > x_d + h_d
+\end{cases}
+\end{equation}
+```
+Where $d \geq 0$ is depth below sediment surface. For simplicity, I use
+the modified parameters $x_{shallow} = x_d$ and $x_{deep} = x_d +h_d$.
 
-We are looking for a new function *f*<sub>1</sub> that slowly turns on
-Aragonite dissolution (i.e., is at least continuous). Hanno pointed out
-that it should also have equal contributions to Aragonite dissolution as
-the old formulation in the sense that
+We are looking for a new function $f_1$ that slowly turns on Aragonite
+dissolution (i.e., is at least continuous). Hanno pointed out that it
+should also have equal contributions to Aragonite dissolution as the old
+formulation in the sense that
 
-We define *f*<sub>1</sub> using 2 parameters:
+```{=Latex}
+\begin{equation}
+\int f_0 = \int f_1
+\end{equation}
+```
+We define $f_1$ using 2 parameters:
 
--   *a*<sub>*o**n**s**e**t*</sub> ≥ 0, the length on which aragonite
-    dissolutino is going from 0 to 1 (linearly)
--   *a*<sub>*t**e**r**m**i**n**a**t**i**o**n*</sub> ≥ 0 the length over
-    which aragonite dissolution goes from 1 to 0 (linearly) With the
-    additional requirements that
-    *f*<sub>1</sub>(*x*<sub>*s**h**a**l**l**o**w*</sub>) = *f*<sub>1</sub>(*x*<sub>*d**e**e**p*</sub>) = 0.5
+-   $a_{onset} \geq 0$, the length on which aragonite dissolutino is
+    going from 0 to 1 (linearly)
+-   $a_{termination} \geq 0$ the length over which aragonite dissolution
+    goes from 1 to 0 (linearly) With the additional requirements that
+    $f_1(x_{shallow}) = f_1(x_{deep} ) = 0.5$
 
 This leads to the formulation
 
+```{=Latex}
+\begin{equation}
+f_1(d) = 
+\begin{cases}
+0  & \text{ for } d < x_{shallow} - 0.5 a_{onset}\\
+\frac{1}{a_{onset}}(d- x_{shallow}) + 0.5 & \text{ for } d \in [x_{shallow} - 0.5 a_{onset}; x_{shallow} + 0.5 a_{onset}]\\
+1 & \text{ for } d \in [x_{shallow} + 0.5 a_{onset}; x_{deep} - 0.5 a_{termination}]\\
+-\frac{1}{a_{termination}}(d- x_{deep}) + 0.5 & \text{ for } d \in [x_{deep} - 0.5 a_{termination}; x_{deep} + 0.5 a_{termination}]\\
+0 & \text{ for } d > x_{deep} + 0.5 a_{termination} 
+\end{cases}
+\end{equation}
+```
 Additional assumptinos made on the parameters are:
 
--   *x*<sub>*s**h**a**l**l**o**w*</sub> − 0.5*a*<sub>*o**n**s**e**t*</sub> ≥ 0:
-    Aragonite dissolution is zero at the sediment surface
--   *x*<sub>*d**e**e**p*</sub> + 0.5*a*<sub>*t**e**r**m**i**n**a**t**i**o**n*</sub> ≤ *L*
-    where *L* is the length of the system: Aragonite dissolution is zero
-    at the bottom of the system
--   *x*<sub>*s**h**a**l**l**o**w*</sub> + 0.5*a*<sub>*o**n**s**e**t*</sub> \< *x*<sub>*d**e**e**p*</sub> − 0.5*a*<sub>*t**e**r**m**i**n**a**t**i**o**n*</sub>:
+-   $x_{shallow} - 0.5 a_{onset} \geq 0$: Aragonite dissolution is zero
+    at the sediment surface
+-   $x_{deep} + 0.5 a_{termination} \leq L$ where $L$ is the length of
+    the system: Aragonite dissolution is zero at the bottom of the
+    system
+-   $x_{shallow} + 0.5 a_{onset} < x_{deep} - 0.5 a_{termination}$:
     Aragonite dissolution is fully turned on at least once
 
 The old parametrization can be recovered as limiting case with
-*a*<sub>*o**n**s**e**t*</sub> = *a*<sub>*t**e**r**m**i**n**a**t**i**o**n*</sub> → 0
+$a_{onset} = a_{termination} \to 0$
 
 #### REMAINING QUESTION:
 
 -   The numerical instabilities are mainly occurring at the top of the
     ADZ. Do we need to turn off Aragonite slowly at the bottom ( choose
-    *a*<sub>*t**e**r**m**i**n**a**t**i**o**n*</sub> \> 0)?
+    $a_{termination}>0$)?
 -   If we turn off Aragonite dissolution slowly, we need to make sure
     all reactants can react before leaving the bottom of the system. How
     do we do that? A simple way would be to increase the size of the
-    system from *L* to
-    *L* + *a*<sub>*t**e**r**m**i**n**a**t**i**o**n*</sub>. However this
-    changes our discretisation (and as a potential result, the numerical
-    properties of the implementation).
+    system from $L$ to $L + a_{termination}$. However this changes our
+    discretisation (and as a potential result, the numerical properties
+    of the implementation).
 -   Is the model assumption that Aragonite turned on fully at least once
     empirically realistic (or necessary)?
 
@@ -98,21 +119,45 @@ those shapes leads to a lot of follow up questions on the model
 A smooth ADZ can be constructed the following way: 1. Start with the
 function
 
-here, *a* \> 0 is a parameter. It determines how fast the onset of the
-ADZ is. In standard constructions, *a* = 1.
+```{=Latex}
+\begin{equation}
+f(x) = 
+\begin{cases}
+\exp(t^{-ax})  & \text{for} x>0 \\
+0 & \text{ else}
+\end{cases}
+\end{equation}
+```
+here, $a>0$ is a parameter. It determines how fast the onset of the ADZ
+is. In standard constructions, $a = 1$.
 
-1.  Define the two cutoff functions
+2.  Define the two cutoff functions
 
+```{=Latex}
+\begin{equation}
+h_1(x) = 
+\frac{f(r_1 - x)}{f(r_2 - x) + f(x - r_1)}
+\end{equation}
+```
 and
 
+```{=Latex}
+\begin{equation}
+h_2(x) = 
+\frac{f(- r_3 + x)}{f(- r_4 + x) + f( - x + r_3)}
+\end{equation}
+```
 Then the smooth ADZ is given by the equation
 
-Parameters are
-*r*<sub>4</sub> \< *r*<sub>3</sub> \< *r*<sub>1</sub> \< *r*2 where \*
-*r*<sub>4</sub> is where first aragonite dissolution starts \*
-*r*<sub>3</sub> depth where Aragonite dissolution reaches its maximum
-for the first time \* *r*<sub>1</sub> deth where Aragomnite dissolution
-decreases again for the forst time \* *r*<sub>2</sub> depth where
+```{=Latex}
+\begin{equation}
+h(x) = h_1(x) h_2(x)
+\end{equation}
+```
+Parameters are $r_4 < r_3 < r_1 < r2$ where \* $r_4$ is where first
+aragonite dissolution starts \* $r_3$ depth where Aragonite dissolution
+reaches its maximum for the first time \* $r_1$ deth where Aragomnite
+dissolution decreases again for the forst time \* $r_2$ depth where
 Aragonite dissolution drops to zero again
 
 (NOTE: Reorder parameter indices, check implementations - @ Niklas)
@@ -130,7 +175,7 @@ questions are:
     them?
 -   If function values need to be calculated ever iteration, is the
     expression numerically stable and sufficiently fast? (I have some
-    concerns about the exp (−*x*) terms and division by small numbers
+    concerns about the $\exp(-x)$ terms and division by small numbers
     here - Niklas)
 -   If not, look for alternative expressions with potentially lower
     order of continuous differentiability. (Comsol uses 2nd order
