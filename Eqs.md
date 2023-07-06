@@ -3,8 +3,8 @@
 The initial porosity profile is usually modelled based on an exponential
 decrease based on the equation
 
-$$ \Phi(d) = a_{por} \exp(- b_{por} d) + c_{por}
-$$\
+$$ \Phi(d) = a_{por} \exp(- b_{por} d) + c_{por}$$
+
 Where $d$ is depth, $\Phi(d)$ is porosity at depth $d$, and
 $a_{por}$,$b_{por}$, and $c_{por}$ are empirical parameters with the
 following interpretations:
