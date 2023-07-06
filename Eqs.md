@@ -2,7 +2,7 @@
 
 The initial porosity profile is usually modelled based on an exponential
 decrease based on the equation
-
+*Φ*(*d*) = *a*<sub>*p**o**r*</sub>exp (−*b*<sub>*p**o**r*</sub>*d*) + *c*<sub>*p**o**r*</sub>
 Where *d* is depth, *Φ*(*d*) is porosity at depth *d*, and
 *a*<sub>*p**o**r*</sub>,*b*<sub>*p**o**r*</sub>, and
 *c*<sub>*p**o**r*</sub> are empirical parameters with the following
