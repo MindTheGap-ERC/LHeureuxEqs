@@ -9,10 +9,10 @@ Where $d$ is depth, $\Phi(d)$ is porosity at depth $d$, and
 $a_{por}$,$b_{por}$, and $c_{por}$ are empirical parameters with the
 following interpretations:
 
--   $c_{por}$ is the limit porosity
--   $b_{por}$ is a "Compressibility constant"that determines how fast
-    porosity approaches $c_{por}$ with depth
--   $a_{por} + c_{por}$ is the porosity at the sediment surface
+- $c_{por}$ is the limit porosity
+- $b_{por}$ is a “Compressibility constant”that determines how fast
+  porosity approaches $c_{por}$ with depth
+- $a_{por} + c_{por}$ is the porosity at the sediment surface
 
 The old parametrization can be obtained by setting $a_{por}=b_{por}=0$
 and $c_{por}=\Phi_{ini}$
@@ -37,16 +37,6 @@ We are currently working with a step function that turns on the
 aragonite dissolution. In the parametrization og LHeureux (2018), it is
 given by
 
-```{=Latex}
-\begin{equation}
-f_0(d) = 
-\begin{cases}
-0  & \text{ for } d < x_d\\
-1 & \text{ for } d \in [x_d, x_d + h_d]\\
-0 & \text{ for } d > x_d + h_d
-\end{cases}
-\end{equation}
-```
 Where $d \geq 0$ is depth below sediment surface. For simplicity, I use
 the modified parameters $x_{shallow} = x_d$ and $x_{deep} = x_d +h_d$.
 
@@ -55,59 +45,41 @@ dissolution (i.e., is at least continuous). Hanno pointed out that it
 should also have equal contributions to Aragonite dissolution as the old
 formulation in the sense that
 
-```{=Latex}
-\begin{equation}
-\int f_0 = \int f_1
-\end{equation}
-```
 We define $f_1$ using 2 parameters:
 
--   $a_{onset} \geq 0$, the length on which aragonite dissolutino is
-    going from 0 to 1 (linearly)
--   $a_{termination} \geq 0$ the length over which aragonite dissolution
-    goes from 1 to 0 (linearly) With the additional requirements that
-    $f_1(x_{shallow}) = f_1(x_{deep} ) = 0.5$
+- $a_{onset} \geq 0$, the length on which aragonite dissolutino is going
+  from 0 to 1 (linearly)
+- $a_{termination} \geq 0$ the length over which aragonite dissolution
+  goes from 1 to 0 (linearly) With the additional requirements that
+  $f_1(x_{shallow}) = f_1(x_{deep} ) = 0.5$
 
 This leads to the formulation
 
-```{=Latex}
-\begin{equation}
-f_1(d) = 
-\begin{cases}
-0  & \text{ for } d < x_{shallow} - 0.5 a_{onset}\\
-\frac{1}{a_{onset}}(d- x_{shallow}) + 0.5 & \text{ for } d \in [x_{shallow} - 0.5 a_{onset}; x_{shallow} + 0.5 a_{onset}]\\
-1 & \text{ for } d \in [x_{shallow} + 0.5 a_{onset}; x_{deep} - 0.5 a_{termination}]\\
--\frac{1}{a_{termination}}(d- x_{deep}) + 0.5 & \text{ for } d \in [x_{deep} - 0.5 a_{termination}; x_{deep} + 0.5 a_{termination}]\\
-0 & \text{ for } d > x_{deep} + 0.5 a_{termination} 
-\end{cases}
-\end{equation}
-```
 Additional assumptinos made on the parameters are:
 
--   $x_{shallow} - 0.5 a_{onset} \geq 0$: Aragonite dissolution is zero
-    at the sediment surface
--   $x_{deep} + 0.5 a_{termination} \leq L$ where $L$ is the length of
-    the system: Aragonite dissolution is zero at the bottom of the
-    system
--   $x_{shallow} + 0.5 a_{onset} < x_{deep} - 0.5 a_{termination}$:
-    Aragonite dissolution is fully turned on at least once
+- $x_{shallow} - 0.5 a_{onset} \geq 0$: Aragonite dissolution is zero at
+  the sediment surface
+- $x_{deep} + 0.5 a_{termination} \leq L$ where $L$ is the length of the
+  system: Aragonite dissolution is zero at the bottom of the system
+- $x_{shallow} + 0.5 a_{onset} < x_{deep} - 0.5 a_{termination}$:
+  Aragonite dissolution is fully turned on at least once
 
 The old parametrization can be recovered as limiting case with
 $a_{onset} = a_{termination} \to 0$
 
 #### REMAINING QUESTION:
 
--   The numerical instabilities are mainly occurring at the top of the
-    ADZ. Do we need to turn off Aragonite slowly at the bottom ( choose
-    $a_{termination}>0$)?
--   If we turn off Aragonite dissolution slowly, we need to make sure
-    all reactants can react before leaving the bottom of the system. How
-    do we do that? A simple way would be to increase the size of the
-    system from $L$ to $L + a_{termination}$. However this changes our
-    discretisation (and as a potential result, the numerical properties
-    of the implementation).
--   Is the model assumption that Aragonite turned on fully at least once
-    empirically realistic (or necessary)?
+- The numerical instabilities are mainly occurring at the top of the
+  ADZ. Do we need to turn off Aragonite slowly at the bottom ( choose
+  $a_{termination}>0$)?
+- If we turn off Aragonite dissolution slowly, we need to make sure all
+  reactants can react before leaving the bottom of the system. How do we
+  do that? A simple way would be to increase the size of the system from
+  $L$ to $L + a_{termination}$. However this changes our discretisation
+  (and as a potential result, the numerical properties of the
+  implementation).
+- Is the model assumption that Aragonite turned on fully at least once
+  empirically realistic (or necessary)?
 
 More general, what are reasonable assumptions on the shape of the ADZ?
 Theresa collected some info on that from empirical studies. Emulating
@@ -119,41 +91,15 @@ those shapes leads to a lot of follow up questions on the model
 A smooth ADZ can be constructed the following way: 1. Start with the
 function
 
-```{=Latex}
-\begin{equation}
-f(x) = 
-\begin{cases}
-\exp(t^{-ax})  & \text{for} x>0 \\
-0 & \text{ else}
-\end{cases}
-\end{equation}
-```
 here, $a>0$ is a parameter. It determines how fast the onset of the ADZ
 is. In standard constructions, $a = 1$.
 
 2.  Define the two cutoff functions
 
-```{=Latex}
-\begin{equation}
-h_1(x) = 
-\frac{f(r_1 - x)}{f(r_2 - x) + f(x - r_1)}
-\end{equation}
-```
 and
 
-```{=Latex}
-\begin{equation}
-h_2(x) = 
-\frac{f(- r_3 + x)}{f(- r_4 + x) + f( - x + r_3)}
-\end{equation}
-```
 Then the smooth ADZ is given by the equation
 
-```{=Latex}
-\begin{equation}
-h(x) = h_1(x) h_2(x)
-\end{equation}
-```
 Parameters are $r_4 < r_3 < r_1 < r2$ where \* $r_4$ is where first
 aragonite dissolution starts \* $r_3$ depth where Aragonite dissolution
 reaches its maximum for the first time \* $r_1$ deth where Aragomnite
@@ -168,15 +114,15 @@ and [this book, p. 41 - 43](https://doi.org/10.1007/978-1-4419-9982-5).
 By construction, it has continuous derivatives of all orders. Open
 questions are:
 
--   Do we need an expression for the (n-th) derivative of this equation
-    for the implementation?
--   Is it necessary to calculate function values every iteration? If no,
-    can we store function values in an array before iteration and reuse
-    them?
--   If function values need to be calculated ever iteration, is the
-    expression numerically stable and sufficiently fast? (I have some
-    concerns about the $\exp(-x)$ terms and division by small numbers
-    here - Niklas)
--   If not, look for alternative expressions with potentially lower
-    order of continuous differentiability. (Comsol uses 2nd order
-    continuous bump functions, this might be an option -Niklas)
+- Do we need an expression for the (n-th) derivative of this equation
+  for the implementation?
+- Is it necessary to calculate function values every iteration? If no,
+  can we store function values in an array before iteration and reuse
+  them?
+- If function values need to be calculated ever iteration, is the
+  expression numerically stable and sufficiently fast? (I have some
+  concerns about the $\exp(-x)$ terms and division by small numbers
+  here - Niklas)
+- If not, look for alternative expressions with potentially lower order
+  of continuous differentiability. (Comsol uses 2nd order continuous
+  bump functions, this might be an option -Niklas)

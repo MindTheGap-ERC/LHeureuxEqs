@@ -1,9 +1,8 @@
 ---
 title: "Formulations Cont. ADZ & Initial porosity profile"
 output:
-  html_document: default
   md_document:
-    variant: markdown
+    variant: gfm
   
 date: "2023-07-04"
 ---
