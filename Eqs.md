@@ -35,14 +35,10 @@ Open Questions:
 
 We are currently working with a step function that turns on the
 aragonite dissolution. In the parametrization og LHeureux (2018), it is
-given by $$f_0(d) = 
-\begin{cases}
-0  & \text{ for } d < x_d\\
-1 & \text{ for } d \in [x_d, x_d + h_d]\\
-0 & \text{ for } d > x_d + h_d
-\end{cases}$$ Where $d \geq 0$ is depth below sediment surface. For
-simplicity, I use the modified parameters $x_{shallow} = x_d$ and
-$x_{deep} = x_d +h_d$.
+given by
+$$f_0(d) = \begin{cases} 0  & \text{ for } d < x_d\\ 1 & \text{ for } d \in [x_d, x_d + h_d]\\0 & \text{ for } d > x_d + h_d\end{cases}$$
+Where $d \geq 0$ is depth below sediment surface. For simplicity, I use
+the modified parameters $x_{shallow} = x_d$ and $x_{deep} = x_d +h_d$.
 
 We are looking for a new function $f_1$ that slowly turns on Aragonite
 dissolution (i.e., is at least continuous). Hanno pointed out that it
@@ -59,8 +55,7 @@ We define $f_1$ using 2 parameters:
   goes from 1 to 0 (linearly) With the additional requirements that
   $f_1(x_{shallow}) = f_1(x_{deep} ) = 0.5$
 
-This leads to the formulation $$f_1(d) = 
-\begin{cases}
+This leads to the formulation $$f_1(d) = \begin{cases}
 0  & \text{ for } d < x_{shallow} - 0.5 a_{onset}\\
 \frac{1}{a_{onset}}(d- x_{shallow}) + 0.5 & \text{ for } d \in [x_{shallow} - 0.5 a_{onset}; x_{shallow} + 0.5 a_{onset}]\\
 1 & \text{ for } d \in [x_{shallow} + 0.5 a_{onset}; x_{deep} - 0.5 a_{termination}]\\

@@ -1,8 +1,10 @@
 ---
 title: "Formulations Cont. ADZ & Initial porosity profile"
 output:
+  html_document:
+    variant:  default
   md_document:
-    variant: gfm
+    variant: default
   
 date: "2023-07-04"
 ---
@@ -36,7 +38,7 @@ Open Questions:
 ## Continuous ADZ
 
 ### Continuous ADZ
-We are currently working with a step function that turns on the aragonite dissolution. In the parametrization og LHeureux (2018), it is given by
+We are currently working with a step function that turns on the aragonite dissolution. In the parametrization og LHeureux (2018), it is given by 
 $$f_0(d) = \begin{cases} 0  & \text{ for } d < x_d\\ 1 & \text{ for } d \in [x_d, x_d + h_d]\\0 & \text{ for } d > x_d + h_d\end{cases}$$
 Where $d \geq 0$ is depth below sediment surface. For simplicity, I use the modified parameters $x_{shallow} = x_d$ and $x_{deep} = x_d +h_d$.
 
