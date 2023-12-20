@@ -9,8 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Niklas Hohmann" />
 
-<meta name="date" content="2023-07-04" />
+<meta name="date" content="2023-12-20" />
 
 <title>Formulations Cont. ADZ &amp; Initial porosity profile</title>
 
@@ -351,7 +352,8 @@ display: none;
 
 <h1 class="title toc-ignore">Formulations Cont. ADZ &amp; Initial
 porosity profile</h1>
-<h4 class="date">2023-07-04</h4>
+<h4 class="author">Niklas Hohmann</h4>
+<h4 class="date">2023-12-20</h4>
 
 </div>
 
@@ -368,20 +370,20 @@ following interpretations:</p>
 <li><span class="math inline">\(c_{por}\)</span> is the limit
 porosity</li>
 <li><span class="math inline">\(b_{por}\)</span> is a “Compressibility
-constant”that determines how fast porosity approaches <span class="math inline">\(c_{por}\)</span> with depth</li>
+constant” that determines how fast porosity approaches <span class="math inline">\(c_{por}\)</span> with depth</li>
 <li><span class="math inline">\(a_{por} + c_{por}\)</span> is the
 porosity at the sediment surface</li>
 </ul>
 <p>The old parametrization can be obtained by setting <span class="math inline">\(a_{por}=b_{por}=0\)</span> and <span class="math inline">\(c_{por}=\Phi_{ini}\)</span></p>
 <p>This is an empirical equation. Parametrizations might deviate,
-compilations of parameters are available in the Literature.</p>
+compilations of parameters are available in the literature.</p>
 <p>Open Questions:</p>
 <ol style="list-style-type: decimal">
 <li>Which parameter values do we use as benchmarks for comparisons
 between implementations?</li>
 <li>Should they be empirically realistic?</li>
 <li><span class="math inline">\(b_{por}\)</span> needs to be adjusted
-when resaling the system to make it dimensionless. This needs to be
+when rescaling the system to make it dimensionless. This needs to be
 specified (see GH issue <a href="https://github.com/MindTheGap-ERC/LMA-Matlab/issues/4">here</a>)</li>
 </ol>
 </div>
@@ -390,21 +392,21 @@ specified (see GH issue <a href="https://github.com/MindTheGap-ERC/LMA-Matlab/is
 <div id="continuous-adz-1" class="section level3">
 <h3>Continuous ADZ</h3>
 <p>We are currently working with a step function that turns on the
-aragonite dissolution. In the parametrization og LHeureux (2018), it is
+aragonite dissolution. In the parametrization og L’Heureux (2018), it is
 given by <span class="math display">\[f_0(d) = \begin{cases} 0  &amp;
 \text{ for } d &lt; x_d\\ 1 &amp; \text{ for } d \in [x_d, x_d + h_d]\\0
 &amp; \text{ for } d &gt; x_d + h_d\end{cases}\]</span> Where <span class="math inline">\(d \geq 0\)</span> is depth below sediment surface.
 For simplicity, I use the modified parameters <span class="math inline">\(x_{shallow} = x_d\)</span> and <span class="math inline">\(x_{deep} = x_d +h_d\)</span>.</p>
-<p>We are looking for a new function <span class="math inline">\(f_1\)</span> that slowly turns on Aragonite
+<p>We are looking for a new function <span class="math inline">\(f_1\)</span> that slowly turns on aragonite
 dissolution (i.e., is at least continuous). Hanno pointed out that it
-should also have equal contributions to Aragonite dissolution as the old
+should also have equal contributions to aragonite dissolution as the old
 formulation in the sense that</p>
 <p><span class="math display">\[\int f_0 = \int f_1\]</span></p>
 <p>We define <span class="math inline">\(f_1\)</span> using 2
 parameters:</p>
 <ul>
 <li><span class="math inline">\(a_{onset} \geq 0\)</span>, the length on
-which aragonite dissolutino is going from 0 to 1 (linearly)</li>
+which aragonite dissolution is going from 0 to 1 (linearly)</li>
 <li><span class="math inline">\(a_{termination} \geq 0\)</span> the
 length over which aragonite dissolution goes from 1 to 0 (linearly) With
 the additional requirements that <span class="math inline">\(f_1(x_{shallow}) = f_1(x_{deep} ) =
@@ -474,11 +476,17 @@ standard constructions, <span class="math inline">\(a = 1\)</span>.</p>
 </ol>
 <p>Then the smooth ADZ is given by the equation <span class="math display">\[h(x) = h_1(x) h_2(x)\]</span></p>
 <p>Parameters are <span class="math inline">\(r_4 &lt; r_3 &lt; r_1 &lt;
-r2\)</span> where * <span class="math inline">\(r_4\)</span> is where
-first aragonite dissolution starts * <span class="math inline">\(r_3\)</span> depth where Aragonite dissolution
-reaches its maximum for the first time * <span class="math inline">\(r_1\)</span> deth where Aragomnite dissolution
-decreases again for the forst time * <span class="math inline">\(r_2\)</span> depth where Aragonite dissolution
-drops to zero again</p>
+r2\)</span> where</p>
+<ul>
+<li><span class="math inline">\(r_4\)</span> is where first aragonite
+dissolution starts</li>
+<li><span class="math inline">\(r_3\)</span> depth where aragonite
+dissolution reaches its maximum for the first time</li>
+<li><span class="math inline">\(r_1\)</span> depth where aragonite
+dissolution decreases again for the forst time</li>
+<li><span class="math inline">\(r_2\)</span> depth where aragonite
+dissolution drops to zero again</li>
+</ul>
 <p>(NOTE: Reorder parameter indices, check implementations - @
 Niklas)</p>
 <p>This formulation of the ADZ id based on <a href="https://math.stackexchange.com/questions/101480/are-there-other-kinds-of-bump-functions-than-e-frac1x2-1">this
