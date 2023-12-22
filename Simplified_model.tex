@@ -1,0 +1,97 @@
+\documentclass[11pt, letterpaper]{article}
+\usepackage{amsmath}
+\title{The diagenetic model by L'Heureux (2018)}
+\author{Emilia Jarochowska & Niklas Hohmann}
+\date{22 December 2023}
+
+\begin{document}
+\maketitle
+
+\chapter{Description}
+The model describes the evolution of the concentrations of five variables:
+\begin{enumerate}
+    \item Solids: two minerals which dissolve and (re)precipitate from/to the \textbf{same} solutes 
+    \begin{enumerate}
+        \item $C_C$ - Calcite
+        \item $C_A$ - Aragonite
+    \end{enumerate}
+    \item Solutes $\hat{c_k}$, where $k = 1, 2$
+    \begin{enumerate}
+        \item $Ca$ - Calcium 
+        \item $CO_3$ - Carbonate 
+    \end{enumerate}
+    \item Porosity
+\end{enumerate}
+
+\chapter{Equations}
+
+\begin{split}
+\frac{\partial}{\partial_t} C_A = -U\frac{\partial}{\partial_x} C_A - Da\big(&(1 - C_A)C_A (\Omega_{DA} - \nu_1 \Omega_{PA}) \\
+        & + \lambda C_A C_C (\Omega_{PC} - \nu_2 \Omega_{DC})\big)
+\end{split}
+
+\begin{split}
+\frac{\partial}{\partial_t} C_C = -U\frac{\partial}{\partial_x} C_C + Da\big(&\lambda(1-C_C)C_C(\Omega_{PC} - \nu_2 \Omega_{DC}) + C_A C_C (\Omega_{DA} - \nu_1 \Omega_{PA})\big)
+\end{split}
+
+\begin{split}
+\frac{\partial}{\partial_t} \hat{c_k} = & -W \frac{\partial}{\partial_x} \hat{c_k} + {1 \over \phi} \frac{\partial}{\partial_x}\left(\phi d_k \frac{\partial\hat{c_k}}{\partial_x} \right) + Da {(1 - \phi) \over \phi} (\delta - \hat{c_k}) \big(C_A (\Omega_{DA} - \nu_1 \Omega_{PA}) - \lambda C_C (\Omega_{PC} - \nu_2 \Omega_{DC})\big)
+\end{split}
+
+The third equation solves for two quantities, $\hat{c_k}$ being a rescaled concentration of dissolved species, $Ca$ and $CO_3$. Both these quantities appear in the definitions of $\Omega_i$ (which are therefore functions of $x$).
+
+\begin{split}
+\frac{\partial}{\partial_t} \phi = - \partial_x(W\phi) + d_{\phi} \partial^2_x \phi + Da(1 - \phi) \big(&C_A(\Omega_{DA} - \nu_1\Omega_{PA}) - \lambda C_C(\Omega_{PC} - \nu_2\Omega_{DC})\big)
+\end{split}
+
+Individual terms are expanded below.
+
+\section{Saturation factors $\Omega_{PA}$, $\Omega_{DA}$, $\Omega_{PC}$ and $\Omega_{DC}$}
+
+\begin{equation}
+\Omega_{PA} = \big(\frac{\hat{c}_{Ca} \hat{c}_{CO3} K_C}{K_A} - 1 \big) ^m
+\end{equation}
+
+\begin{equation}
+\Omega_{DA} = \big(1 - \frac{\hat{c}_{Ca} \hat{c}_{CO3} K_C}{K_A} \big) ^{m'} \theta(x)
+\end{equation}
+
+where $\theta(x)$ is a characteristic function indicating that aragonite dissolution is activated in a specific interval (ADZ, see the next section) of $x$ only. It is defined as 1 when $x_d/X* < x < (x_d + h_d)/X*$ and zero otherwise.
+
+\begin{equation}
+\Omega_{PC} = (\hat{c}_{Ca} \hat{c}_{CO3}  - 1 ) ^n
+\end{equation}
+
+\begin{equation}
+\Omega_{DC} = (1 - \hat{c}_{Ca} \hat{c}_{CO3} ) ^{n'}
+\end{equation}
+
+$\Omega_{PA}$ and $\Omega_{DA}$ are saturation factors for precipitation and dissolution of aragonite. $\Omega_{PC}$ and $\Omega_{DC}$ are saturation factors for precipitation and dissolution of calcite.
+
+\section{Velocities of the solids, $U$ and $W$}
+In the article:
+\begin{equation}
+    U = 1 - \frac{K(\phi^0)}{S}(1-\phi^0)\big(\frac{\rho_s^0}{\rho_w} - 1 \big) + \frac{K(\phi)}{S}(1-\phi) \big(\frac{\rho_s}{\rho_w}-1\big)
+\end{equation}
+
+\begin{equation}
+    W = 1 - \frac{K(\phi^0)}{S}(1-\phi^0) \big(\frac{\rho_s^0}{\rho_w}-1) - \frac{K(\phi)}{S} \frac{(1-\phi)^2}{\phi}\big(\frac{\rho_s}{\rho_w}-1\big)
+\end{equation}
+
+\section{Hydraulic conductivity $K(\phi)$}
+
+\begin{equation}
+    K = \beta \frac{\phi^3}{(1 - \phi)^2}F(\phi)
+\end{equation}
+where
+\begin{equation}
+    F(\phi) = 1 - \exp\left( -\frac{10(1-\phi)}{\phi} \right)
+\end{equation}
+
+\chapter{Spatial heterogeneity}
+
+An important property of the model is that it is \textbf{spatially variable}. The spatial coordinate $x$ is divided into three intervals. One of the reactions, aragonite dissolution, is switched off along $x$, except for the middle interval ("Aragonite Dissolution Zone", later referred to as ADZ), where it is turned on. This increases the porosity in ADZ. This creates two diffusion processes: diffusion of solutes $\hat{c_k}$ produced by dissolving aragonite and diffusion (propagation) of porosity. But $D_{\phi}$ is very small compared to $D_k$.
+
+
+
+\end{document}
