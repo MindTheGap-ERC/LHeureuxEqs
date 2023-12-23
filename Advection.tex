@@ -42,8 +42,9 @@ Which is:
 \end{equation}
 So $U$ from the code is calculated as follows:
 \begin{equation}
-    U = 1 - (\frac{\rho_s^0}{\rho_w} - 1) \frac{\beta}{S} \times \frac{\phi_0^3}{(1 - \phi_0)} \left(1 - \exp\left(10 - \frac{10}{\phi_0} \right) \right) + (\frac{\rho_s}{\rho_w} - 1)\frac{\beta}{S} \phi^3\times\frac{F}{1-\phi}
+    U = 1 - \frac{\beta}{S} \times \frac{\phi_0^3}{(1 - \phi_0)} \left(1 - \exp\left(10 - \frac{10}{\phi_0} \right) \right)(\frac{\rho_s^0}{\rho_w} - 1) + \frac{1}{S}\beta \times\frac{\phi^3}{1-\phi} F (\frac{\rho_s}{\rho_w} - 1)
 \end{equation}
+compared with the original:
 \begin{equation}
     U = 1 - \frac{K(\phi^0)}{S}(1-\phi^0)\big(\frac{\rho_s^0}{\rho_w} - 1 \big) + \frac{K(\phi)}{S}(1-\phi) \big(\frac{\rho_s}{\rho_w}-1\big)
 \end{equation}

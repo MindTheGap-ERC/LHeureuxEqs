@@ -29,15 +29,12 @@ The model describes the evolution of the concentrations of five variables:
 \frac{\partial}{\partial_t} C_A = -U\frac{\partial}{\partial_x} C_A - Da\big(&(1 - C_A)C_A (\Omega_{DA} - \nu_1 \Omega_{PA}) \\
         & + \lambda C_A C_C (\Omega_{PC} - \nu_2 \Omega_{DC})\big)
 \end{split}
-
 \begin{split}
 \frac{\partial}{\partial_t} C_C = -U\frac{\partial}{\partial_x} C_C + Da\big(&\lambda(1-C_C)C_C(\Omega_{PC} - \nu_2 \Omega_{DC}) + C_A C_C (\Omega_{DA} - \nu_1 \Omega_{PA})\big)
 \end{split}
-
-\begin{split}
-\frac{\partial}{\partial_t} \hat{c_k} = & -W \frac{\partial}{\partial_x} \hat{c_k} + {1 \over \phi} \frac{\partial}{\partial_x}\left(\phi d_k \frac{\partial\hat{c_k}}{\partial_x} \right) + Da {(1 - \phi) \over \phi} (\delta - \hat{c_k}) \big(C_A (\Omega_{DA} - \nu_1 \Omega_{PA}) - \lambda C_C (\Omega_{PC} - \nu_2 \Omega_{DC})\big)
+    \begin{split}
+   \frac{\partial}{\partial_t} \hat{c}_k = & -W \frac{\partial}{\partial_x} \hat{c}_k + {1 \over \phi} \frac{\partial}{\partial_x}\left(\phi d_k \frac{\partial\hat{c}_k}{\partial_x} \right) + Da {(1 - \phi) \over \phi} (\delta - \hat{c}_k) \big(C_A (\Omega_{DA} - \nu_1 \Omega_{PA}) - \\\lambda C_C (\Omega_{PC} - \nu_2 \Omega_{DC})\big)     
 \end{split}
-
 The third equation solves for two quantities, $\hat{c_k}$ being a rescaled concentration of dissolved species, $Ca$ and $CO_3$. Both these quantities appear in the definitions of $\Omega_i$ (which are therefore functions of $x$).
 
 \begin{split}
@@ -92,6 +89,30 @@ where
 
 An important property of the model is that it is \textbf{spatially variable}. The spatial coordinate $x$ is divided into three intervals. One of the reactions, aragonite dissolution, is switched off along $x$, except for the middle interval ("Aragonite Dissolution Zone", later referred to as ADZ), where it is turned on. This increases the porosity in ADZ. This creates two diffusion processes: diffusion of solutes $\hat{c_k}$ produced by dissolving aragonite and diffusion (propagation) of porosity. But $D_{\phi}$ is very small compared to $D_k$.
 
+\chapter{Boundary conditions}
 
+\chapter{Parameters}
 
+\begin{table}
+    \centering
+    \begin{tabular}{cclll}
+ Symbol& Formula& Value&Meaning &Units\\
+ $\beta$& & 0.1& &cm/a\\
+ $d_k$& & & &\\
+         Da&  $\frac{k_2D_{Ca}^0}{S^2}$& &Damköhler number &\\
+ $\delta$& $\frac{\rho_s}{\mu_A\sqrt{K_C}}$& & &\\
+         $\lambda$&  & & &\\
+ $m, m'$& & 2.48&Reaction order for aragonite precipitation and dissolution &-\\
+ $\mu_A$& & 100.09& &g/mol\\
+ $n, n'$& & &Reaction order for calcite precipitation and dissolution &\\
+         $\nu_1$&  & & &\\
+         $\nu_2$&  & & &\\
+         $\rho_s$&  & & &\\
+         $\rho_s^0$& & & &\\
+         $\rho_w$&  & 1.023& Density of water&\\
+ $S$& & 0.1& Sedimentation rate&cm/a\\
+    \end{tabular}
+    \caption{Caption}
+    \label{tab:my_label}
+\end{table}
 \end{document}
