@@ -1,7 +1,6 @@
 \documentclass[11pt, letterpaper]{article}
 \usepackage{amsmath}
-\title{The diagenetic model by L'Heureux (2018)}
-\author{Emilia Jarochowska & Niklas Hohmann}
+\title{Advection}
 \date{22 December 2023}
 
 \begin{document}
@@ -15,18 +14,38 @@ In the article:
 \begin{equation}
     W = 1 - \frac{K(\phi^0)}{S}(1-\phi^0) \big(\frac{\rho_s^0}{\rho_w}-1) - \frac{K(\phi)}{S} \frac{(1-\phi)^2}{\phi}\big(\frac{\rho_s}{\rho_w}-1\big)
 \end{equation}
+Just to re-calculate how these expressions are evaluated in Python, I reversed the code into equations.
+In \verb|evolution_rate|:
+\begin{verbatim}
+    U = self.presum + self.rhorat * Phi ** 3 * F /one_minus_Phi
+\end{verbatim}
+where:
+\begin{verbatim}
+    self.presum = 1 - self.rhorat0 * self.Phi0 ** 3 * (1 - np.exp(10 - 10 / self.Phi0)) / (1 - self.Phi0)     
+\end{verbatim}
 
-Just to re-calculate how these expressions are evaluated in Python, I turned the code into equations
+I need to rewrite it back into equations to be able to read it:
 
 \begin{equation}
-    rhorat_0 = \frac{\rho_s^0}{rho_w - 1} \frac{\beta}{S}
+    rhorat_0 = (\frac{\rho_s^0}{\rho_w} - 1) \frac{\beta}{S}
 \end{equation}
-
+Substituting this into \verb|presum|:
 \begin{equation}
-    presum = 1 - \frac{\rho_s^0}{rho_w - 1} \frac{\beta}{S} \times \frac{\phi_0^3}{(1 - \phi_0)} \left(1 - \exp\left(10 - \frac{10}{\phi_0} \right) \right)  
+    presum = 1 - (\frac{\rho_s^0}{\rho_w} - 1) \frac{\beta}{S} \times \frac{\phi_0^3}{(1 - \phi_0)} \left(1 - \exp\left(10 - \frac{10}{\phi_0} \right) \right)  
+\end{equation}
+\begin{verbatim}
+    self.rhorat = (self.rhos / self.rhow - 1) * self.beta / self.sedimentationrate
+\end{verbatim}
+Which is:
+\begin{equation}
+    rhorat = (\frac{\rho_s}{\rho_w} - 1)\frac{\beta}{S}
+\end{equation}
+So $U$ from the code is calculated as follows:
+\begin{equation}
+    U = 1 - (\frac{\rho_s^0}{\rho_w} - 1) \frac{\beta}{S} \times \frac{\phi_0^3}{(1 - \phi_0)} \left(1 - \exp\left(10 - \frac{10}{\phi_0} \right) \right) + (\frac{\rho_s}{\rho_w} - 1)\frac{\beta}{S} \phi^3\times\frac{F}{1-\phi}
+\end{equation}
+\begin{equation}
+    U = 1 - \frac{K(\phi^0)}{S}(1-\phi^0)\big(\frac{\rho_s^0}{\rho_w} - 1 \big) + \frac{K(\phi)}{S}(1-\phi) \big(\frac{\rho_s}{\rho_w}-1\big)
 \end{equation}
 
-Two questions:
-The second part of this product, $\frac{\phi_0^3}{(1 - \phi_0)} \left(1 - \exp\left(10 - \frac{10}{\phi_0} \right) \right)$, is $K$ from Eq. 15. But in Eq the denominator is squared $(1 - \phi_0)^2$, but here it is not.
-Secondly, I don't know why presum uses always $\phi_0$. Advection shouldn't really change if we don't make it dependent on the changes in $\phi$?
 \end{document}
