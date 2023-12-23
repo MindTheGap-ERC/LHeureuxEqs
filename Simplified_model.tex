@@ -7,7 +7,7 @@
 \begin{document}
 \maketitle
 
-\chapter{Description}
+\section{Description}
 The model describes the evolution of the concentrations of five variables:
 \begin{enumerate}
     \item Solids: two minerals which dissolve and (re)precipitate from/to the \textbf{same} solutes 
@@ -15,7 +15,7 @@ The model describes the evolution of the concentrations of five variables:
         \item $C_C$ - Calcite
         \item $C_A$ - Aragonite
     \end{enumerate}
-    \item Solutes $\hat{c_k}$, where $k = 1, 2$
+    \item Solutes $\hat{c}_k$, where $k = 1, 2$
     \begin{enumerate}
         \item $Ca$ - Calcium 
         \item $CO_3$ - Carbonate 
@@ -23,27 +23,36 @@ The model describes the evolution of the concentrations of five variables:
     \item Porosity
 \end{enumerate}
 
-\chapter{Equations}
-
+\section{Equations}
+\begin{equation}
 \begin{split}
 \frac{\partial}{\partial_t} C_A = -U\frac{\partial}{\partial_x} C_A - Da\big(&(1 - C_A)C_A (\Omega_{DA} - \nu_1 \Omega_{PA}) \\
         & + \lambda C_A C_C (\Omega_{PC} - \nu_2 \Omega_{DC})\big)
 \end{split}
-\begin{split}
-\frac{\partial}{\partial_t} C_C = -U\frac{\partial}{\partial_x} C_C + Da\big(&\lambda(1-C_C)C_C(\Omega_{PC} - \nu_2 \Omega_{DC}) + C_A C_C (\Omega_{DA} - \nu_1 \Omega_{PA})\big)
-\end{split}
-    \begin{split}
-   \frac{\partial}{\partial_t} \hat{c}_k = & -W \frac{\partial}{\partial_x} \hat{c}_k + {1 \over \phi} \frac{\partial}{\partial_x}\left(\phi d_k \frac{\partial\hat{c}_k}{\partial_x} \right) + Da {(1 - \phi) \over \phi} (\delta - \hat{c}_k) \big(C_A (\Omega_{DA} - \nu_1 \Omega_{PA}) - \\\lambda C_C (\Omega_{PC} - \nu_2 \Omega_{DC})\big)     
-\end{split}
-The third equation solves for two quantities, $\hat{c_k}$ being a rescaled concentration of dissolved species, $Ca$ and $CO_3$. Both these quantities appear in the definitions of $\Omega_i$ (which are therefore functions of $x$).
+\end{equation}
 
+\begin{equation}
 \begin{split}
-\frac{\partial}{\partial_t} \phi = - \partial_x(W\phi) + d_{\phi} \partial^2_x \phi + Da(1 - \phi) \big(&C_A(\Omega_{DA} - \nu_1\Omega_{PA}) - \lambda C_C(\Omega_{PC} - \nu_2\Omega_{DC})\big)
+\frac{\partial}{\partial_t} C_C = -U\frac{\partial}{\partial_x} C_C + \\Da\big(&\lambda(1-C_C)C_C(\Omega_{PC} - \nu_2 \Omega_{DC}) + C_A C_C (\Omega_{DA} - \nu_1 \Omega_{PA})\big)
 \end{split}
+\end{equation}
+
+\begin{equation}
+    \begin{split}
+   \frac{\partial}{\partial_t} \hat{c}_k = & -W \frac{\partial}{\partial_x} \hat{c}_k + \frac{1}{\phi} \frac{\partial}{\partial_x}\left(\phi d_k \frac{\partial\hat{c}_k}{\partial_x} \right) + \\Da \frac{(1 - \phi)}{\phi} (\delta - \hat{c}_k) \big(C_A (\Omega_{DA} - \nu_1 \Omega_{PA}) - \\\lambda C_C (\Omega_{PC} - \nu_2 \Omega_{DC})\big)     
+\end{split}
+\end{equation}
+
+The third equation solves for two quantities, $\hat{c_k}$ being a rescaled concentration of dissolved species, $Ca$ and $CO_3$. Both these quantities appear in the definitions of $\Omega_i$ (which are therefore functions of $x$).
+\begin{equation}
+\begin{split}
+\frac{\partial}{\partial_t} \phi = - \partial_x(W\phi) + d_{\phi} \partial^2_x \phi + Da(1 - \phi) \big(&C_A(\Omega_{DA} - \nu_1\Omega_{PA}) - \\\lambda C_C(\Omega_{PC} - \nu_2\Omega_{DC})\big)
+\end{split}
+\end{equation}
 
 Individual terms are expanded below.
 
-\section{Saturation factors $\Omega_{PA}$, $\Omega_{DA}$, $\Omega_{PC}$ and $\Omega_{DC}$}
+\subsection{Saturation factors $\Omega_{PA}$, $\Omega_{DA}$, $\Omega_{PC}$ and $\Omega_{DC}$}
 
 \begin{equation}
 \Omega_{PA} = \big(\frac{\hat{c}_{Ca} \hat{c}_{CO3} K_C}{K_A} - 1 \big) ^m
@@ -65,8 +74,8 @@ where $\theta(x)$ is a characteristic function indicating that aragonite dissolu
 
 $\Omega_{PA}$ and $\Omega_{DA}$ are saturation factors for precipitation and dissolution of aragonite. $\Omega_{PC}$ and $\Omega_{DC}$ are saturation factors for precipitation and dissolution of calcite.
 
-\section{Velocities of the solids, $U$ and $W$}
-In the article:
+\subsection{Velocities of the solids, $U$ and $W$}
+In the article these expressions are given:
 \begin{equation}
     U = 1 - \frac{K(\phi^0)}{S}(1-\phi^0)\big(\frac{\rho_s^0}{\rho_w} - 1 \big) + \frac{K(\phi)}{S}(1-\phi) \big(\frac{\rho_s}{\rho_w}-1\big)
 \end{equation}
@@ -74,8 +83,15 @@ In the article:
 \begin{equation}
     W = 1 - \frac{K(\phi^0)}{S}(1-\phi^0) \big(\frac{\rho_s^0}{\rho_w}-1) - \frac{K(\phi)}{S} \frac{(1-\phi)^2}{\phi}\big(\frac{\rho_s}{\rho_w}-1\big)
 \end{equation}
+But then it is argued that $\rho_s^0 = \rho_s$ (see "2.5 Constant density approximation") so this becomes:
+\begin{equation}
+    U = 1 - \left(K(\phi^0)(1-\phi^0) + K(\phi)(1-\phi)\right) \frac{1}{S}\left(\frac{\rho_s}{\rho_w}-1\right)
+\end{equation}
+\begin{equation}
+    W = 1 - \left(K(\phi^0)(1-\phi^0) - K(\phi) \frac{(1-\phi)^2}{\phi}\right)\frac{1}{S}\left(\frac{\rho_s}{\rho_w}-1\right)
+\end{equation}
 
-\section{Hydraulic conductivity $K(\phi)$}
+\subsection{Hydraulic conductivity $K(\phi)$}
 
 \begin{equation}
     K = \beta \frac{\phi^3}{(1 - \phi)^2}F(\phi)
@@ -85,34 +101,54 @@ where
     F(\phi) = 1 - \exp\left( -\frac{10(1-\phi)}{\phi} \right)
 \end{equation}
 
-\chapter{Spatial heterogeneity}
+\section{Spatial heterogeneity}
 
 An important property of the model is that it is \textbf{spatially variable}. The spatial coordinate $x$ is divided into three intervals. One of the reactions, aragonite dissolution, is switched off along $x$, except for the middle interval ("Aragonite Dissolution Zone", later referred to as ADZ), where it is turned on. This increases the porosity in ADZ. This creates two diffusion processes: diffusion of solutes $\hat{c_k}$ produced by dissolving aragonite and diffusion (propagation) of porosity. But $D_{\phi}$ is very small compared to $D_k$.
 
-\chapter{Boundary conditions}
+\section{Boundary conditions}
+Upper/bottom is of course left/right, but since we are talking about a column of sediment, top and down is more intuitive.
 
-\chapter{Parameters}
+\subsection{Upper boundary}
+Dirichlet boundary conditions. For the case supposed to yield oscillations, they are:
+
+\begin{table}
+    \centering
+    \begin{tabular}{cc}
+         $C_A$& 0.6\\
+         $C_C$& 0.3\\
+         $\hat{c}_{Ca}$& 0.326\\
+         $\hat{c}_{CO_3}$& 0.326\\
+         $\phi$& 0.8\\
+    \end{tabular}
+    \caption{Upper boundary conditions}
+\end{table}
+\subsection{Bottom boundary}
+There are no bottom boundary conditions in the article. This is likely a flaw of the model, because we don't know what happens when advection is reversed (negative).
+In the numerical solution in Python, we use a dummy boundary condition at the bottom. To prevent it from affecting the integration, we use only backward differencing for the spatial derivatives in the right-hand sides of the time derivative equations for CA and CC.
+
+\section{Parameters}
 
 \begin{table}
     \centering
     \begin{tabular}{cclll}
  Symbol& Formula& Value&Meaning &Units\\
- $\beta$& & 0.1& &cm/a\\
- $d_k$& & & &\\
-         Da&  $\frac{k_2D_{Ca}^0}{S^2}$& &Damköhler number &\\
- $\delta$& $\frac{\rho_s}{\mu_A\sqrt{K_C}}$& & &\\
-         $\lambda$&  & & &\\
- $m, m'$& & 2.48&Reaction order for aragonite precipitation and dissolution &-\\
- $\mu_A$& & 100.09& &g/mol\\
- $n, n'$& & &Reaction order for calcite precipitation and dissolution &\\
-         $\nu_1$&  & & &\\
-         $\nu_2$&  & & &\\
-         $\rho_s$&  & & &\\
-         $\rho_s^0$& & & &\\
-         $\rho_w$&  & 1.023& Density of water&\\
- $S$& & 0.1& Sedimentation rate&cm/a\\
+ $\beta$& & 0.1& Constant in the hydraulic conductivity&cm/a\\
+ $d_{k=1}$& $\frac{D_{Ca}}{D_{Ca}^0}$& 1& Dim-less diffusion coefficient of Ca&-\\
+ $d_{k=2}$& $\frac{D_{CO_{3}}}{D_{Ca}^0}$& 2.0667& Dim-less diffusion coefficient of $CO_3$&-\\
+ $d_\phi$& $\frac{D_\phi}{D_{Ca}^0}$& $7.708409\times10^{-4}$& Dim-less diffusion coefficient of porosity&-\\
+         Da&  $\frac{k_2D_{Ca}^0}{S^2}$& 13190&Damköhler number &\\
+ $\delta$& $\frac{\rho_s}{\mu_A\sqrt{K_C}}$& 43.7956& ?&\\
+ $K_C$& & $10^{-6.37}$& Calcite solubility&$mol^2$\\
+         $\lambda$&  $k_3/k_2$& 0.1& Dim-less reaction rate coefficient&\\
+ $m, m'$& -& 2.48&Reaction order for $A$ precipitation and dissolution&-\\
+ $\mu_A$& -& 100.09& Molar mass of aragonite&g/mol\\
+ $n, n'$& -& 2.80&Reaction order for $C$ precipitation and dissolution&-\\
+         $\nu_1$&  $k_1/k_2$& 1& Dim-less reaction rate of aragonite reactions&-\\
+         $\nu_2$&  $k_4/k_3$& 1& Dim-less reaction rate of calcite reactions&-\\
+         $\rho_s$&  & 2.863& Density of the sediment (all solids, i.e. $1 - \phi$)&\\
+         $\rho_w$&  -& 1.023& Density of water&\\
+ $S$& -& 0.1& Sedimentation rate&cm/a\\
     \end{tabular}
-    \caption{Caption}
-    \label{tab:my_label}
+    \caption{Parameters of the model}
 \end{table}
 \end{document}
