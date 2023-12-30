@@ -1,8 +1,8 @@
-\documentclass[11pt, letterpaper]{article}
+\documentclass[10pt, letterpaper]{article}
 \usepackage{amsmath}
 \title{The diagenetic model by L'Heureux (2018)}
 \author{Emilia Jarochowska & Niklas Hohmann}
-\date{22 December 2023}
+\date{30 December 2023}
 
 \begin{document}
 \maketitle
@@ -15,96 +15,98 @@ The model describes the evolution of the concentrations of five variables:
         \item $C_C$ - Calcite
         \item $C_A$ - Aragonite
     \end{enumerate}
-    \item Solutes $\hat{c}_k$, where $k = 1, 2$
+    \item Solutes $\hat{c}_k$, where $k \in \{Ca, CO_{3}\}$
     \begin{enumerate}
-        \item $Ca$ - Calcium 
-        \item $CO_3$ - Carbonate 
+        \item $c_{Ca}$ - Calcium 
+        \item $c_{CO_{3}}$ - Carbonate 
     \end{enumerate}
-    \item Porosity
+    \item Porosity $\phi$
 \end{enumerate}
 
 \section{Equations}
 \begin{equation}
-\begin{split}
-\frac{\partial}{\partial_t} C_A = -U\frac{\partial}{\partial_x} C_A - Da\big(&(1 - C_A)C_A (\Omega_{DA} - \nu_1 \Omega_{PA}) \\
-        & + \lambda C_A C_C (\Omega_{PC} - \nu_2 \Omega_{DC})\big)
-\end{split}
+\frac{\partial}{\partial_t} C_A = -U\frac{\partial}{\partial_x} C_A - \operatorname{Da}\left[(1 - C_A)C_A (\Omega_{DA} - \nu_1 \Omega_{PA}) \\
+        + \lambda C_A C_C (\Omega_{PC} - \nu_2 \Omega_{DC})\right] \tag{40}
 \end{equation}
 
 \begin{equation}
-\begin{split}
-\frac{\partial}{\partial_t} C_C = -U\frac{\partial}{\partial_x} C_C + \\Da\big(&\lambda(1-C_C)C_C(\Omega_{PC} - \nu_2 \Omega_{DC}) + C_A C_C (\Omega_{DA} - \nu_1 \Omega_{PA})\big)
-\end{split}
+\frac{\partial}{\partial_t} C_C = -U\frac{\partial}{\partial_x} C_C + \\\operatorname{Da}\left[\lambda(1-C_C)C_C(\Omega_{PC} - \nu_2 \Omega_{DC}) + C_A C_C (\Omega_{DA} - \nu_1 \Omega_{PA})\right] \tag{41}
 \end{equation}
 
 \begin{equation}
-    \begin{split}
-   \frac{\partial}{\partial_t} \hat{c}_k = & -W \frac{\partial}{\partial_x} \hat{c}_k + \frac{1}{\phi} \frac{\partial}{\partial_x}\left(\phi d_k \frac{\partial\hat{c}_k}{\partial_x} \right) + \\Da \frac{(1 - \phi)}{\phi} (\delta - \hat{c}_k) \big(C_A (\Omega_{DA} - \nu_1 \Omega_{PA}) - \\\lambda C_C (\Omega_{PC} - \nu_2 \Omega_{DC})\big)     
-\end{split}
+\begin{align*}
+   \frac{\partial}{\partial_t} \hat{c}_k = -W \frac{\partial}{\partial_x} \hat{c}_k + \frac{1}{\phi} \frac{\partial}{\partial_x} \left(\phi d_k \frac{\partial\hat{c}_k}{\partial_x}\right )+ \\
+   \operatorname{Da} \frac{(1 - \phi)}{\phi} (\delta - \hat{c}_k) \left[C_A (\Omega_{DA} - \nu_1 \Omega_{PA}) - \lambda C_C (\Omega_{PC} - \nu_2 \Omega_{DC})\right] \tag{42}
+\end{align*}
 \end{equation}
 
 The third equation solves for two quantities, $\hat{c_k}$ being a rescaled concentration of dissolved species, $Ca$ and $CO_3$. Both these quantities appear in the definitions of $\Omega_i$ (which are therefore functions of $x$).
 \begin{equation}
-\begin{split}
-\frac{\partial}{\partial_t} \phi = - \partial_x(W\phi) + d_{\phi} \partial^2_x \phi + Da(1 - \phi) \big(&C_A(\Omega_{DA} - \nu_1\Omega_{PA}) - \\\lambda C_C(\Omega_{PC} - \nu_2\Omega_{DC})\big)
-\end{split}
+\frac{\partial}{\partial_t} \phi = - \frac{\partial}{\partial_x}(W\phi) + d_{\phi} \frac{\partial^2\phi}{\partial x^2} + \operatorname{Da}(1 - \phi) \left[C_A(\Omega_{DA} - \nu_1\Omega_{PA}) - \\\lambda C_C(\Omega_{PC} - \nu_2\Omega_{DC})\right] \tag{43}
 \end{equation}
 
 Individual terms are expanded below.
 
-\subsection{Saturation factors $\Omega_{PA}$, $\Omega_{DA}$, $\Omega_{PC}$ and $\Omega_{DC}$}
+\subsection{Saturation factors $\Omega_{PA}$, $\Omega_{DA}$, $\Omega_{PC}$ and $\Omega_{DC}$ (Eq. 45)} 
 
 \begin{equation}
-\Omega_{PA} = \big(\frac{\hat{c}_{Ca} \hat{c}_{CO3} K_C}{K_A} - 1 \big) ^m
+\Omega_{PA} = max\left[0, \left(\frac{\hat{c}_{Ca} \hat{c}_{CO3} K_C}{K_A} - 1 \right)\right]^m \nonumber
 \end{equation}
 
 \begin{equation}
-\Omega_{DA} = \big(1 - \frac{\hat{c}_{Ca} \hat{c}_{CO3} K_C}{K_A} \big) ^{m'} \theta(x)
+\Omega_{DA} = max\left[0, \left(1 - \frac{\hat{c}_{Ca} \hat{c}_{CO3} K_C}{K_A} \right)\right] ^{m'} \theta(x) \nonumber 
 \end{equation}
 
-where $\theta(x)$ is a characteristic function indicating that aragonite dissolution is activated in a specific interval (ADZ, see the next section) of $x$ only. It is defined as 1 when $x_d/X* < x < (x_d + h_d)/X*$ and zero otherwise.
+where $\theta(x)$ is a characteristic function indicating that aragonite dissolution is activated in a specific interval (ADZ, see the next section) of $x$ only. 
+
+$\theta(x) = \begin{cases}
+    1  & x_d/X* < x < (x_d + h_d)/X* \\
+    0 & otherwise
+\end{cases}$
 
 \begin{equation}
-\Omega_{PC} = (\hat{c}_{Ca} \hat{c}_{CO3}  - 1 ) ^n
+\Omega_{PC} = max\left[0, (\hat{c}_{Ca} \hat{c}_{CO3}  - 1 )\right] ^n \nonumber 
 \end{equation}
 
 \begin{equation}
-\Omega_{DC} = (1 - \hat{c}_{Ca} \hat{c}_{CO3} ) ^{n'}
+\Omega_{DC} = max\left[0, (1 - \hat{c}_{Ca} \hat{c}_{CO3})\right]^{n'} \nonumber
 \end{equation}
 
 $\Omega_{PA}$ and $\Omega_{DA}$ are saturation factors for precipitation and dissolution of aragonite. $\Omega_{PC}$ and $\Omega_{DC}$ are saturation factors for precipitation and dissolution of calcite.
 
 \subsection{Velocities of the solids, $U$ and $W$}
-In the article these expressions are given:
+Equations below are adapted from Eqs. 46-47 in the article.
 \begin{equation}
-    U = 1 - \frac{K(\phi^0)}{S}(1-\phi^0)\big(\frac{\rho_s^0}{\rho_w} - 1 \big) + \frac{K(\phi)}{S}(1-\phi) \big(\frac{\rho_s}{\rho_w}-1\big)
-\end{equation}
-
-\begin{equation}
-    W = 1 - \frac{K(\phi^0)}{S}(1-\phi^0) \big(\frac{\rho_s^0}{\rho_w}-1) - \frac{K(\phi)}{S} \frac{(1-\phi)^2}{\phi}\big(\frac{\rho_s}{\rho_w}-1\big)
-\end{equation}
-But then it is argued that $\rho_s^0 = \rho_s$ (see "2.5 Constant density approximation") so this becomes:
-\begin{equation}
-    U = 1 - \left(K(\phi^0)(1-\phi^0) + K(\phi)(1-\phi)\right) \frac{1}{S}\left(\frac{\rho_s}{\rho_w}-1\right)
+    U = 1 - \left(K(\phi^0)(1-\phi^0) + K(\phi)(1-\phi)\right) \frac{1}{S}\left(\frac{\rho_s}{\rho_w}-1\right) \nonumber
 \end{equation}
 \begin{equation}
-    W = 1 - \left(K(\phi^0)(1-\phi^0) - K(\phi) \frac{(1-\phi)^2}{\phi}\right)\frac{1}{S}\left(\frac{\rho_s}{\rho_w}-1\right)
+    W = 1 - \left(K(\phi^0)(1-\phi^0) - K(\phi) \frac{(1-\phi)^2}{\phi}\right)\frac{1}{S}\left(\frac{\rho_s}{\rho_w}-1\right) \nonumber
 \end{equation}
 
 \subsection{Hydraulic conductivity $K(\phi)$}
 
 \begin{equation}
-    K = \beta \frac{\phi^3}{(1 - \phi)^2}F(\phi)
+    K = \beta \frac{\phi^3}{(1 - \phi)^2}F(\phi) \tag{15}
 \end{equation}
 where
 \begin{equation}
-    F(\phi) = 1 - \exp\left( -\frac{10(1-\phi)}{\phi} \right)
+    F(\phi) = 1 - \exp\left( -\frac{10(1-\phi)}{\phi} \right) \tag{17}
 \end{equation}
 
-\section{Spatial heterogeneity}
-
-An important property of the model is that it is \textbf{spatially variable}. The spatial coordinate $x$ is divided into three intervals. One of the reactions, aragonite dissolution, is switched off along $x$, except for the middle interval ("Aragonite Dissolution Zone", later referred to as ADZ), where it is turned on. This increases the porosity in ADZ. This creates two diffusion processes: diffusion of solutes $\hat{c_k}$ produced by dissolving aragonite and diffusion (propagation) of porosity. But $D_{\phi}$ is very small compared to $D_k$.
-
+\subsection{Porosity diffusion coefficient $d_{\phi}$}
+$d_{\phi}$ is the dimensionless form, calculated as $d_{\phi} = D_{\phi}/D_{Ca}^0$. 
+In the article and in our calculations, it is set to be constant, $7.708409\times10^{-4} << d_k$. The value of the constant is obtained as:
+\begin{equation}
+    D_{\phi} = -\left(1 - \phi\right)K(\phi)\frac{H}{g\rho_w} = \beta\frac{\phi^3}{(1 - \phi)}\frac{1}{bg\rho_w(\phi_{nr}-\phi_{\infty})}F \tag{25}
+\end{equation}
+where:\\
+$H$ should be $H(\phi)$ - a function that links effective stress acting on sediment with the change in porosity\\
+$b$ is a parameter (see table below)\\
+$g$ is Earth's gravitational acceleration\\
+$\beta$ is a parameter (see table below)\\
+$\rho_w$ is the density of water (see table below)\\
+$\phi_{nr}$ is stationary system porosity in the absence of reactions\\
+$\phi_{\infty}$ is actually unclear
 \section{Boundary conditions}
 Upper/bottom is of course left/right, but since we are talking about a column of sediment, top and down is more intuitive.
 
@@ -132,6 +134,7 @@ In the numerical solution in Python, we use a dummy boundary condition at the bo
     \centering
     \begin{tabular}{cclll}
  Symbol& Formula& Value&Meaning &Units\\
+ b& & 5& Sediment compressibility&$kPa^{-1}$\\
  $\beta$& & 0.1& Constant in the hydraulic conductivity&cm/a\\
  $d_{k=1}$& $\frac{D_{Ca}}{D_{Ca}^0}$& 1& Dim-less diffusion coefficient of Ca&-\\
  $d_{k=2}$& $\frac{D_{CO_{3}}}{D_{Ca}^0}$& 2.0667& Dim-less diffusion coefficient of $CO_3$&-\\
@@ -151,4 +154,5 @@ In the numerical solution in Python, we use a dummy boundary condition at the bo
     \end{tabular}
     \caption{Parameters of the model}
 \end{table}
+
 \end{document}
