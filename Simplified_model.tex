@@ -2,7 +2,7 @@
 \usepackage{amsmath}
 \title{The diagenetic model by L'Heureux (2018)}
 \author{Emilia Jarochowska & Niklas Hohmann}
-\date{30 December 2023}
+\date{31 December 2023}
 
 \begin{document}
 \maketitle
@@ -50,26 +50,27 @@ Individual terms are expanded below.
 \subsection{Saturation factors $\Omega_{PA}$, $\Omega_{DA}$, $\Omega_{PC}$ and $\Omega_{DC}$ (Eq. 45)} 
 
 \begin{equation}
-\Omega_{PA} = max\left[0, \left(\frac{\hat{c}_{Ca} \hat{c}_{CO3} K_C}{K_A} - 1 \right)\right]^m \nonumber
-\end{equation}
-
-\begin{equation}
-\Omega_{DA} = max\left[0, \left(1 - \frac{\hat{c}_{Ca} \hat{c}_{CO3} K_C}{K_A} \right)\right] ^{m'} \theta(x) \nonumber 
+\begin{align}
+\Omega_{PA} &= max\left[0, \left(\frac{\hat{c}_{Ca} \hat{c}_{CO3} K_C}{K_A} - 1 \right)\right]^m \nonumber \\
+\Omega_{DA} &= max\left[0, \left(1 - \frac{\hat{c}_{Ca} \hat{c}_{CO3} K_C}{K_A} \right)\right] ^{m'} \theta(x) \nonumber 
+\end{align}
 \end{equation}
 
 where $\theta(x)$ is a characteristic function indicating that aragonite dissolution is activated in a specific interval (ADZ, see the next section) of $x$ only. 
-
-$\theta(x) = \begin{cases}
-    1  & x_d/X* < x < (x_d + h_d)/X* \\
-    0 & otherwise
-\end{cases}$
-
 \begin{equation}
-\Omega_{PC} = max\left[0, (\hat{c}_{Ca} \hat{c}_{CO3}  - 1 )\right] ^n \nonumber 
+\begin{align}
+\theta(x) &= \begin{cases}
+    1  &\mbox{if } x_d/X* < x < (x_d + h_d)/X* \\
+    0  &\mbox{otherwise } 
+\end{cases} \\
+\end{align}
 \end{equation}
 
 \begin{equation}
-\Omega_{DC} = max\left[0, (1 - \hat{c}_{Ca} \hat{c}_{CO3})\right]^{n'} \nonumber
+\begin{align}
+\Omega_{PC} &= max\left[0, (\hat{c}_{Ca} \hat{c}_{CO3}  - 1 )\right] ^n \nonumber  \\
+\Omega_{DC} &= max\left[0, (1 - \hat{c}_{Ca} \hat{c}_{CO3})\right]^{n'} \nonumber
+\end{align}
 \end{equation}
 
 $\Omega_{PA}$ and $\Omega_{DA}$ are saturation factors for precipitation and dissolution of aragonite. $\Omega_{PC}$ and $\Omega_{DC}$ are saturation factors for precipitation and dissolution of calcite.
@@ -77,10 +78,10 @@ $\Omega_{PA}$ and $\Omega_{DA}$ are saturation factors for precipitation and dis
 \subsection{Velocities of the solids, $U$ and $W$}
 Equations below are adapted from Eqs. 46-47 in the article.
 \begin{equation}
-    U = 1 - \left(K(\phi^0)(1-\phi^0) + K(\phi)(1-\phi)\right) \frac{1}{S}\left(\frac{\rho_s}{\rho_w}-1\right) \nonumber
-\end{equation}
-\begin{equation}
-    W = 1 - \left(K(\phi^0)(1-\phi^0) - K(\phi) \frac{(1-\phi)^2}{\phi}\right)\frac{1}{S}\left(\frac{\rho_s}{\rho_w}-1\right) \nonumber
+\begin{align}
+    U &= 1 - \left(K(\phi^0)(1-\phi^0) + K(\phi)(1-\phi)\right) \frac{1}{S}\left(\frac{\rho_s}{\rho_w}-1\right) \nonumber \\
+    W &= 1 - \left(K(\phi^0)(1-\phi^0) - K(\phi) \frac{(1-\phi)^2}{\phi}\right)\frac{1}{S}\left(\frac{\rho_s}{\rho_w}-1\right) \nonumber
+\end{align}
 \end{equation}
 
 \subsection{Hydraulic conductivity $K(\phi)$}
@@ -126,7 +127,7 @@ Dirichlet boundary conditions. For the case supposed to yield oscillations, they
 \end{table}
 \subsection{Bottom boundary}
 There are no bottom boundary conditions in the article. This is likely a flaw of the model, because we don't know what happens when advection is reversed (negative).
-In the numerical solution in Python, we use a dummy boundary condition at the bottom. To prevent it from affecting the integration, we use only backward differencing for the spatial derivatives in the right-hand sides of the time derivative equations for CA and CC.
+In the numerical solution in Python, we use a dummy boundary condition at the bottom. To prevent it from affecting the integration, we use only backward differencing for the spatial derivatives in the right-hand sides of the time derivative equations for $C_A$ and $C_C$.
 
 \section{Parameters}
 
