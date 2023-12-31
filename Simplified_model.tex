@@ -2,7 +2,7 @@
 \usepackage{amsmath}
 \title{The diagenetic model by L'Heureux (2018)}
 \author{Emilia Jarochowska & Niklas Hohmann}
-\date{30 December 2023}
+\date{31 December 2023}
 
 \begin{document}
 \maketitle
@@ -10,15 +10,15 @@
 \section{Description}
 The model describes the evolution of the concentrations of five variables:
 \begin{enumerate}
-    \item Solids: two minerals which dissolve and (re)precipitate from/to the \textbf{same} solutes. THey are expressed as proportions of the solid phase, and must accordingly be non-negative, and their sum must be smaller or equal to one. 
+    \item Solids: two minerals which dissolve and (re)precipitate from/to the \textbf{same} solutes. They are expressed as proportions of the solid phase, and must accordingly be non-negative, and their sum must be smaller or equal to one. 
     \begin{enumerate}
-        \item $C_C$ - Proportion of Calcite in the solid phase
-        \item $C_A$ - Proportion of Aragonite in the solid phase 
+        \item $C_C$ - Proportion of calcite in the solid phase
+        \item $C_A$ - Proportion of aragonite in the solid phase 
     \end{enumerate}
     \item Solutes $\hat{c}_k$, where $k \in \{Ca, CO_{3}\}$
     \begin{enumerate}
-        \item $\hat c_{Ca}$ - Calcium in pore water
-        \item $ \hat c_{CO_{3}}$ - Carbonate in pore water
+        \item $\hat c_{Ca}$ - calcium concentration in pore water
+        \item $ \hat c_{CO_{3}}$ - carbonate concentration in pore water
     \end{enumerate}
     \item Porosity $\phi$
 \end{enumerate}
@@ -50,39 +50,32 @@ Individual terms are expanded below.
 
 \subsection{Saturation factors $\Omega_{PA}$, $\Omega_{DA}$, $\Omega_{PC}$ and $\Omega_{DC}$ (Eq. 45)} 
 
-\begin{equation}
-\Omega_{PA} = \max\left[0, \left(\frac{\hat{c}_{Ca} \hat{c}_{CO3} K_C}{K_A} - 1 \right)\right]^m \nonumber
-\end{equation}
-
-\begin{equation}
-\Omega_{DA} = \max\left[0, \left(1 - \frac{\hat{c}_{Ca} \hat{c}_{CO3} K_C}{K_A} \right)\right] ^{m'} \theta(x) \nonumber 
-\end{equation}
+\begin{align}
+\Omega_{PA} &= \max\left[0, \left(\frac{\hat{c}_{Ca} \hat{c}_{CO3} K_C}{K_A} - 1 \right)\right]^m \nonumber \\
+\Omega_{DA} &= \max\left[0, \left(1 - \frac{\hat{c}_{Ca} \hat{c}_{CO3} K_C}{K_A} \right)\right] ^{m'} \theta(x) \nonumber 
+\end{align}
 
 where $\theta(x)$ is a characteristic function indicating that aragonite dissolution is activated in a specific interval (ADZ, see the next section) of $x$ only. 
+\begin{align}
+\theta(x) = \begin{cases}
+    1  &\mbox{if } x_d/X^* < x < (x_d + h_d)/X^* \\
+    0 &\text{otherwise}
+\end{cases}
+\end{align}
 
-$\theta(x) = \begin{cases}
-    1  & x_d/X^* < x < (x_d + h_d)/X^* \\
-    0 & \text{otherwise}
-\end{cases}$
-
-\begin{equation}
-\Omega_{PC} = \max\left[0, (\hat{c}_{Ca} \hat{c}_{CO3}  - 1 )\right] ^n \nonumber 
-\end{equation}
-
-\begin{equation}
-\Omega_{DC} = \max\left[0, (1 - \hat{c}_{Ca} \hat{c}_{CO3})\right]^{n'} \nonumber
-\end{equation}
+\begin{align}
+\Omega_{PC} &= \max\left[0, (\hat{c}_{Ca} \hat{c}_{CO3}  - 1 )\right] ^n \nonumber \\
+\Omega_{DC} &= \max\left[0, (1 - \hat{c}_{Ca} \hat{c}_{CO3})\right]^{n'} \nonumber
+\end{align}
 
 $\Omega_{PA}$ and $\Omega_{DA}$ are saturation factors for precipitation and dissolution of aragonite. $\Omega_{PC}$ and $\Omega_{DC}$ are saturation factors for precipitation and dissolution of calcite.
 
 \subsection{Velocities of the solids, $U$ and $W$}
 Equations below are adapted from Eqs. 46-47 in the article.
-\begin{equation}
-    U = 1 - \left(K(\phi^0)(1-\phi^0) + K(\phi)(1-\phi)\right) \frac{1}{S}\left(\frac{\rho_s}{\rho_w}-1\right) \nonumber
-\end{equation}
-\begin{equation}
-    W = 1 - \left(K(\phi^0)(1-\phi^0) - K(\phi) \frac{(1-\phi)^2}{\phi}\right)\frac{1}{S}\left(\frac{\rho_s}{\rho_w}-1\right) \nonumber
-\end{equation}
+\begin{align}
+    U &= 1 - \left(K(\phi^0)(1-\phi^0) + K(\phi)(1-\phi)\right) \frac{1}{S}\left(\frac{\rho_s}{\rho_w}-1\right) \nonumber \\
+    W &= 1 - \left(K(\phi^0)(1-\phi^0) - K(\phi) \frac{(1-\phi)^2}{\phi}\right)\frac{1}{S}\left(\frac{\rho_s}{\rho_w}-1\right) \nonumber
+\end{align}
 
 \subsection{Hydraulic conductivity $K(\phi)$}
 
@@ -137,7 +130,7 @@ and
 \begin{equation}
      \frac{\partial \hat c_k (x,t)}{\partial x} \big|_L = 0 \tag{35}
 \end{equation}
-for $k \in \{ Ca, CO3\} $. There are no boundary conditions at the bottom for the solid phase. 
+for $k \in \{ Ca, CO_3\} $. There are no boundary conditions at the bottom for the solid phase. 
 For the bottom boundary conditions, the argument is that the system is long enough for all reactions to have finished at the bottom. Porewater concentrations and porosity shuld thus be constant, and exported out of the system. Solid phases are purely advective once reactions have stopped, and the bottom is the downwind side of advection, so no boundary conditions are required. We know there are empirically plausible scenarios where the direction of advection at the bottom reverses (e.g., massive dissolution in the ADZ) - in this case the model is ill-posed.
 
 \section{Parameters}
