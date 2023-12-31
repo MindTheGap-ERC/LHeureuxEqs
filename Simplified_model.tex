@@ -10,39 +10,40 @@
 \section{Description}
 The model describes the evolution of the concentrations of five variables:
 \begin{enumerate}
-    \item Solids: two minerals which dissolve and (re)precipitate from/to the \textbf{same} solutes 
+    \item Solids: two minerals which dissolve and (re)precipitate from/to the \textbf{same} solutes. THey are expressed as proportions of the solid phase, and must accordingly be non-negative, and their sum must be smaller or equal to one. 
     \begin{enumerate}
-        \item $C_C$ - Calcite
-        \item $C_A$ - Aragonite
+        \item $C_C$ - Proportion of Calcite in the solid phase
+        \item $C_A$ - Proportion of Aragonite in the solid phase 
     \end{enumerate}
     \item Solutes $\hat{c}_k$, where $k \in \{Ca, CO_{3}\}$
     \begin{enumerate}
-        \item $c_{Ca}$ - Calcium 
-        \item $c_{CO_{3}}$ - Carbonate 
+        \item $\hat c_{Ca}$ - Calcium in pore water
+        \item $ \hat c_{CO_{3}}$ - Carbonate in pore water
     \end{enumerate}
     \item Porosity $\phi$
 \end{enumerate}
+Equation numbers refer to the equations in the original publication.
 
 \section{Equations}
 \begin{equation}
-\frac{\partial}{\partial_t} C_A = -U\frac{\partial}{\partial_x} C_A - \operatorname{Da}\left[(1 - C_A)C_A (\Omega_{DA} - \nu_1 \Omega_{PA}) \\
+\frac{\partial}{\partial t} C_A = -U\frac{\partial}{\partial x} C_A - \operatorname{Da}\left[(1 - C_A)C_A (\Omega_{DA} - \nu_1 \Omega_{PA}) \\
         + \lambda C_A C_C (\Omega_{PC} - \nu_2 \Omega_{DC})\right] \tag{40}
 \end{equation}
 
 \begin{equation}
-\frac{\partial}{\partial_t} C_C = -U\frac{\partial}{\partial_x} C_C + \\\operatorname{Da}\left[\lambda(1-C_C)C_C(\Omega_{PC} - \nu_2 \Omega_{DC}) + C_A C_C (\Omega_{DA} - \nu_1 \Omega_{PA})\right] \tag{41}
+\frac{\partial}{\partial t} C_C = -U\frac{\partial}{\partial x} C_C + \\\operatorname{Da}\left[\lambda(1-C_C)C_C(\Omega_{PC} - \nu_2 \Omega_{DC}) + C_A C_C (\Omega_{DA} - \nu_1 \Omega_{PA})\right] \tag{41}
 \end{equation}
 
-\begin{equation}
+
 \begin{align*}
-   \frac{\partial}{\partial_t} \hat{c}_k = -W \frac{\partial}{\partial_x} \hat{c}_k + \frac{1}{\phi} \frac{\partial}{\partial_x} \left(\phi d_k \frac{\partial\hat{c}_k}{\partial_x}\right )+ \\
+   \frac{\partial}{\partial t} \hat{c}_k = -W \frac{\partial}{\partial x} \hat{c}_k + \frac{1}{\phi} \frac{\partial}{\partial x} \left(\phi d_k \frac{\partial\hat{c}_k}{\partial x}\right )+ \\
    \operatorname{Da} \frac{(1 - \phi)}{\phi} (\delta - \hat{c}_k) \left[C_A (\Omega_{DA} - \nu_1 \Omega_{PA}) - \lambda C_C (\Omega_{PC} - \nu_2 \Omega_{DC})\right] \tag{42}
 \end{align*}
-\end{equation}
+
 
 The third equation solves for two quantities, $\hat{c_k}$ being a rescaled concentration of dissolved species, $Ca$ and $CO_3$. Both these quantities appear in the definitions of $\Omega_i$ (which are therefore functions of $x$).
 \begin{equation}
-\frac{\partial}{\partial_t} \phi = - \frac{\partial}{\partial_x}(W\phi) + d_{\phi} \frac{\partial^2\phi}{\partial x^2} + \operatorname{Da}(1 - \phi) \left[C_A(\Omega_{DA} - \nu_1\Omega_{PA}) - \\\lambda C_C(\Omega_{PC} - \nu_2\Omega_{DC})\right] \tag{43}
+\frac{\partial}{\partial t} \phi = - \frac{\partial}{\partial x}(W\phi) + d_{\phi} \frac{\partial^2\phi}{\partial x^2} + \operatorname{Da}(1 - \phi) \left[C_A(\Omega_{DA} - \nu_1\Omega_{PA}) - \\\lambda C_C(\Omega_{PC} - \nu_2\Omega_{DC})\right] \tag{43}
 \end{equation}
 
 Individual terms are expanded below.
@@ -50,26 +51,26 @@ Individual terms are expanded below.
 \subsection{Saturation factors $\Omega_{PA}$, $\Omega_{DA}$, $\Omega_{PC}$ and $\Omega_{DC}$ (Eq. 45)} 
 
 \begin{equation}
-\Omega_{PA} = max\left[0, \left(\frac{\hat{c}_{Ca} \hat{c}_{CO3} K_C}{K_A} - 1 \right)\right]^m \nonumber
+\Omega_{PA} = \max\left[0, \left(\frac{\hat{c}_{Ca} \hat{c}_{CO3} K_C}{K_A} - 1 \right)\right]^m \nonumber
 \end{equation}
 
 \begin{equation}
-\Omega_{DA} = max\left[0, \left(1 - \frac{\hat{c}_{Ca} \hat{c}_{CO3} K_C}{K_A} \right)\right] ^{m'} \theta(x) \nonumber 
+\Omega_{DA} = \max\left[0, \left(1 - \frac{\hat{c}_{Ca} \hat{c}_{CO3} K_C}{K_A} \right)\right] ^{m'} \theta(x) \nonumber 
 \end{equation}
 
 where $\theta(x)$ is a characteristic function indicating that aragonite dissolution is activated in a specific interval (ADZ, see the next section) of $x$ only. 
 
 $\theta(x) = \begin{cases}
-    1  & x_d/X* < x < (x_d + h_d)/X* \\
-    0 & otherwise
+    1  & x_d/X^* < x < (x_d + h_d)/X^* \\
+    0 & \text{otherwise}
 \end{cases}$
 
 \begin{equation}
-\Omega_{PC} = max\left[0, (\hat{c}_{Ca} \hat{c}_{CO3}  - 1 )\right] ^n \nonumber 
+\Omega_{PC} = \max\left[0, (\hat{c}_{Ca} \hat{c}_{CO3}  - 1 )\right] ^n \nonumber 
 \end{equation}
 
 \begin{equation}
-\Omega_{DC} = max\left[0, (1 - \hat{c}_{Ca} \hat{c}_{CO3})\right]^{n'} \nonumber
+\Omega_{DC} = \max\left[0, (1 - \hat{c}_{Ca} \hat{c}_{CO3})\right]^{n'} \nonumber
 \end{equation}
 
 $\Omega_{PA}$ and $\Omega_{DA}$ are saturation factors for precipitation and dissolution of aragonite. $\Omega_{PC}$ and $\Omega_{DC}$ are saturation factors for precipitation and dissolution of calcite.
@@ -107,13 +108,14 @@ $\beta$ is a parameter (see table below)\\
 $\rho_w$ is the density of water (see table below)\\
 $\phi_{nr}$ is stationary system porosity in the absence of reactions\\
 $\phi_{\infty}$ is actually unclear
-\section{Boundary conditions}
+
+\section{Boundary and initial conditions}
 Upper/bottom is of course left/right, but since we are talking about a column of sediment, top and down is more intuitive.
 
 \subsection{Upper boundary}
 Dirichlet boundary conditions. For the case supposed to yield oscillations, they are:
 
-\begin{table}
+\begin{table}[hbt!]
     \centering
     \begin{tabular}{cc}
          $C_A$& 0.6\\
@@ -124,13 +126,23 @@ Dirichlet boundary conditions. For the case supposed to yield oscillations, they
     \end{tabular}
     \caption{Upper boundary conditions}
 \end{table}
+
 \subsection{Bottom boundary}
-There are no bottom boundary conditions in the article. This is likely a flaw of the model, because we don't know what happens when advection is reversed (negative).
-In the numerical solution in Python, we use a dummy boundary condition at the bottom. To prevent it from affecting the integration, we use only backward differencing for the spatial derivatives in the right-hand sides of the time derivative equations for CA and CC.
+At the bottom, the boundary conditions are that there is no diffusive flux for porosity and ions in the pore water. In equations:
+
+\begin{equation}
+    \frac{\partial \phi(x,t)}{\partial x} \big|_L = 0 \tag{35}
+\end{equation}
+and 
+\begin{equation}
+     \frac{\partial \hat c_k (x,t)}{\partial x} \big|_L = 0 \tag{35}
+\end{equation}
+for $k \in \{ Ca, CO3\} $. There are no boundary conditions at the bottom for the solid phase. 
+For the bottom boundary conditions, the argument is that the system is long enough for all reactions to have finished at the bottom. Porewater concentrations and porosity shuld thus be constant, and exported out of the system. Solid phases are purely advective once reactions have stopped, and the bottom is the downwind side of advection, so no boundary conditions are required. We know there are empirically plausible scenarios where the direction of advection at the bottom reverses (e.g., massive dissolution in the ADZ) - in this case the model is ill-posed.
 
 \section{Parameters}
 
-\begin{table}
+\begin{table}[hbt!]
     \centering
     \begin{tabular}{cclll}
  Symbol& Formula& Value&Meaning &Units\\
